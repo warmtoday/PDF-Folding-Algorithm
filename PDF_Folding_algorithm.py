@@ -43,7 +43,7 @@ def kstransform(g1map,g2map):
     return kmap,kmap_B
 
 
-dirs = os.listdir('/lustre/home/acct-phyzj/phyzj-m31/whz/DECALS_REC/hscmap/')
+dirs = os.listdir('/lustre/home/acct-phyzj/phyzj-m31/whz/DECALS_REC/hscmap/')#the path where data exist 
 filecount = 0
 dirs0 = []
 for filename0 in dirs:
@@ -54,7 +54,6 @@ for filename in dirs0:
     if filename[0] == 'D' and (filename[1] == 'R') and filename[2] == '3' and filename[-1] == '5':
         filecount += 1
         np.random.seed(123)
-        fr = '/lustre/home/acct-phyzj/phyzj-m31/whz/DECALS_REC/hscmap/'+filename
         fr = 'hsc_197.8_-1.3_0.0.h5'
         f1 = h5py.File(fr,'r')
 
@@ -99,7 +98,6 @@ for filename in dirs0:
         radius_y = 72
         order = int(radius / 2)
         orders = range((order+1)*radius)
-        image_size = 512
         scale_factor = 1
         rad = 0.6
         fq = Fourier_Quad(100,28)
@@ -153,15 +151,11 @@ for filename in dirs0:
         for c in range(len(xpart)):
             density0[c] = density_map[math.floor(ypart[c]+radius/2),math.floor(xpart[c]+radius/2)]
 
-        if total_num == 0:
-            continue
 
         g1map_temp = np.zeros([radius_x, radius_y])
 
         while (res > 0.1):
             if res > 1:break
-            fr = 'hsc_197.8_-1.3_0.0.h5'
-            f1 = h5py.File(fr, 'r')
 
             g1map = np.zeros([radius_x, radius_y])
             g2map = np.zeros([radius_x, radius_y])
