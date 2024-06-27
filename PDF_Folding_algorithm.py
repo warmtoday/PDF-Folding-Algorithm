@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 import time
-import math
 import os
 from mpi4py import MPI
 from numpy import fft
@@ -18,6 +17,7 @@ import string
 from astropy import units as u
 from astropy.coordinates import SkyCoord, Distance
 from astropy.cosmology import Planck15
+import math
 matplotlib.use('Agg')
 
 def kstransform(g1map,g2map):
