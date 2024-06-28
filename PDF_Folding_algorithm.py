@@ -52,12 +52,12 @@ for filename0 in dirs:
     if (filename0[0] == 'D') and (filename0[1] == 'R') and filename0[-1] == '5' and filename0[2] == '3':
         dirs0.append(filename0)
 
+#reconstruct shear and kappa map of each small region. 
 for filename in dirs0:
     if filename[0] == 'D' and (filename[1] == 'R') and filename[2] == '3' and filename[-1] == '5':
         filecount += 1
         np.random.seed(123)
-        fr = 'hsc_197.8_-1.3_0.0.h5'
-        f1 = h5py.File(fr,'r')
+        f1 = h5py.File(filename,'r')
 
         cluster_ra =float(filename.split('_')[1])
         cluster_dec = float(filename.split('_')[2])
@@ -95,7 +95,7 @@ for filename in dirs0:
         ra_ticks_24arcmin = [cluster_ra_12arcminl, cluster_ra, cluster_ra_12arcminh]
         dec_ticks_24arcmin = [cluster_dec_12arcminl, cluster_dec, cluster_dec_12arcminh]
 
-        radius = 72
+        radius = 72  #Each region is in 1.2deg*1.2deg. We devide it into 72pixels*72pixels. 
         radius_x = 72
         radius_y = 72
         order = int(radius / 2)
@@ -114,9 +114,9 @@ for filename in dirs0:
         total_num = len(xpart)
         res = 1
 
-        if total_num < 10000: continue
+        if total_num < 10000: continue#if there are few galaxies, we skip this region.
 
-        zl01 = zl + 0.2
+        zl01 = zl + 0.2 #we suppose the background galaxies are in zl+0.2 with using "shear ratio". The "shear ratio" is defined as "s_cr".
         dist_lens = Distance(unit=u.Mpc, z=zl, cosmology=Planck15)
         dist_source = Distance(unit=u.Mpc, z=zl01, cosmology=Planck15)
         ang_lens_dist = dist_lens[()] / (1 + zl)
@@ -191,6 +191,7 @@ for filename in dirs0:
             trans_factor = (s_cr1 / s_cr2)
             s_cr = (s_cr2 / s_cr1)
 
+            #recovering coefficient in front of each mode in "orders". Different order has different "i,j".
             for t in orders:
                     i = int(t / radius)
                     j = int(t % radius - (radius / 2) + 1)
