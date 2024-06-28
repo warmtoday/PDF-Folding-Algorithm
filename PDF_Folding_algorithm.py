@@ -43,9 +43,11 @@ def kstransform(g1map,g2map):
     return kmap,kmap_B
 
 
-dirs = os.listdir('/lustre/home/acct-phyzj/phyzj-m31/whz/DECALS_REC/hscmap/')#the path where data exist 
+dirs = os.listdir('/lustre/home/acct-phyzj/phyzj-m31/whz/DECALS_REC/hscmap/')#the path where data existing
 filecount = 0
 dirs0 = []
+
+#files that named "DR3" in prefix and ".h5"in suffix.
 for filename0 in dirs:
     if (filename0[0] == 'D') and (filename0[1] == 'R') and filename0[-1] == '5' and filename0[2] == '3':
         dirs0.append(filename0)
