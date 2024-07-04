@@ -19,7 +19,7 @@ from astropy.coordinates import SkyCoord, Distance
 from astropy.cosmology import Planck15
 import math
 matplotlib.use('Agg')
-
+#kstransform function contains ks method, which need users give two conponents:g1 map and g2 map.  
 def kstransform(g1map,g2map):
 
     gfs = np.fft.fft2(g1map+g2map*(1j))
