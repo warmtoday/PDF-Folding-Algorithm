@@ -64,6 +64,7 @@ for filename in dirs0:
         zl = float(filename.split('_')[3][:-3])
 
         zl = 0.1
+        #convert ra,dec into pixel index
         if (cluster_ra > 155) or (cluster_ra < 128) or (cluster_dec > 5) or (cluster_dec < -5): continue
 
         cluster_ra_l = int((cluster_ra - 0.25)*1000)/1000
@@ -141,14 +142,14 @@ for filename in dirs0:
 
         number_radius =1
         number_avr = 1
-
+        #calculate the galaxy number density
         density_map = np.ones([radius_x, radius_y])
         for i in range(radius_x):
             for j in range(radius_y):
                 id = ((i - int(radius_x/2) - xpart)**2 + ((j - int(radius_y/2)) - ypart)**2<number_radius**2)
                 if len(xpart[id]) > 0:
                     density_map[j, i] = np.sqrt(len(xpart[id]))
-
+        #calculate galaxy number density of each galaxy. 
         density0 = np.ones(len(xpart))
         for c in range(len(xpart)):
             density0[c] = density_map[math.floor(ypart[c]+radius/2),math.floor(xpart[c]+radius/2)]
